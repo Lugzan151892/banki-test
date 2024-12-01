@@ -1,10 +1,14 @@
 <template>
   <main :class="$style[className]">
-    <HeaderComponent />
+    <HeaderComponent @search="search = $event" />
     <section :class="$style[`${className}-section`]">
-      <h1>Картины эпохи Возрождения</h1>
+      <h1 class="text1">Картины эпохи Возрождения</h1>
       <div :class="$style[`${className}-wrapper`]">
-        <GalleryCard v-for="card in cards" :card="card" :key="card.id" />
+        <GalleryCard
+          v-for="card in filteredCards"
+          :card="card"
+          :key="card.id"
+        />
       </div>
     </section>
     <FooterComponent />
@@ -16,6 +20,7 @@ import HeaderComponent from "@/components/header/HeaderComponent.vue";
 import FooterComponent from "@/components/footer/FooterComponent.vue";
 import { cards } from "@/views/main/utils";
 import GalleryCard from "@/views/main/components/GalleryCard.vue";
+import { IGalleryCard } from "./interfaces";
 
 export default {
   name: "MainView",
@@ -32,7 +37,15 @@ export default {
       className,
       componentName,
       cards,
+      search: "",
     };
+  },
+  computed: {
+    filteredCards(): IGalleryCard[] {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return this.cards.filter((card) => card.title.includes(this.search));
+    },
   },
 };
 </script>
@@ -40,23 +53,29 @@ export default {
 <style lang="scss" module>
 $component: "main-view";
 .#{$component} {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 
   &-section {
     margin: 0 auto;
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
     padding-top: 45px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 1250px;
+
+    @media (max-width: 1366px) {
+      margin: 0 24px 24px;
+      min-width: auto;
+    }
   }
 
   &-wrapper {
     margin-top: 39px;
     display: flex;
     gap: 32px;
+    flex-wrap: wrap;
   }
 }
 </style>

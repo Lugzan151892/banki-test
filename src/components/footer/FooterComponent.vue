@@ -1,6 +1,6 @@
 <template>
   <div :class="$style[className]">
-    <MenuComponent />
+    <MenuComponent direction-top />
     <div :class="$style[`${className}-info`]">
       <a :class="$style[`${className}-info--item`]">
         <img :src="phone" />
@@ -46,15 +46,38 @@ $component: "footer-component";
   background-color: var(--main-footer);
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 23vw;
+
+  @media (max-width: 1600px) {
+    padding-left: 13vw;
+  }
+
+  @media (max-width: 1366px) {
+    padding-left: 24px;
+    padding-right: 24px;
+    justify-content: space-between;
+  }
 
   &-info {
     display: flex;
     gap: 51px;
     margin-left: 126px;
+
+    @media (max-width: 750px) {
+      flex-direction: column;
+      gap: 8px;
+      margin-left: 12px;
+    }
+
     &--item {
       display: flex;
       gap: 8px;
+
+      @media (max-width: 750px) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 }

@@ -12,6 +12,7 @@ export const cards: IGalleryCard[] = [
     status: ECARD_STATUS.ACTIVE,
     price: 1000000,
     old_price: 2000000,
+    description: "Классная картина 1",
     image: image1,
     additional_images: [image2, image3, image4],
   },
@@ -22,6 +23,7 @@ export const cards: IGalleryCard[] = [
     status: ECARD_STATUS.ACTIVE,
     price: 1000000,
     old_price: 2000000,
+    description: "Классная картина 2",
     image: image2,
     additional_images: [image1, image3, image4],
   },
@@ -29,9 +31,10 @@ export const cards: IGalleryCard[] = [
     id: 3,
     title: "«Сотворение Адама»",
     author: "Микеланджело",
-    status: ECARD_STATUS.RESERVED,
+    status: ECARD_STATUS.ACTIVE,
     price: 1000000,
     old_price: 2000000,
+    description: "Классная картина 3",
     image: image3,
     additional_images: [image1, image2, image4],
   },
@@ -42,7 +45,10 @@ export const cards: IGalleryCard[] = [
     status: ECARD_STATUS.SOLD,
     price: 1000000,
     old_price: 2000000,
+    description: "Классная картина 4",
     image: image4,
     additional_images: [image1, image2, image3],
   },
 ];
+
+export const LOCAL_CARDS_VAR = "cards";

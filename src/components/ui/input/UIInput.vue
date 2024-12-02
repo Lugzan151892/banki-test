@@ -8,7 +8,9 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "UIInput",
   model: {
     prop: "value",
@@ -32,7 +34,7 @@ export default {
       className,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" module>

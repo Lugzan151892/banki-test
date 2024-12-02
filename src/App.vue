@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import MainView from "./views/main/MainView.vue";
+import MainView from "@/views/main/MainView.vue";
 
 export default Vue.extend({
   name: "App",

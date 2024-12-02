@@ -18,8 +18,9 @@
 import MenuComponent from "../menu/MenuComponent.vue";
 import phone from "@/assets/images/phone.svg";
 import place from "@/assets/images/place.svg";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "FooterComponent",
   components: {
     MenuComponent,
@@ -35,7 +36,7 @@ export default {
       place,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" module>

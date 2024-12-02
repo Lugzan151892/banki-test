@@ -30,7 +30,13 @@
             >{{ card.price.toLocaleString("ru-RU") }} &dollar;</span
           >
         </div>
-        <UIButton> Купить </UIButton>
+        <UIButton
+          :checked="card.status === ECARD_STATUS.RESERVED"
+          :loading="isLoading"
+          @click="handleClick(card)"
+        >
+          {{ card.status === ECARD_STATUS.RESERVED ? "В корзине" : "Купить" }}
+        </UIButton>
       </div>
       <div class="text3" :class="$style[`${className}-price--sold`]" v-else>
         Продана на аукционе
@@ -40,6 +46,10 @@
       <div :class="$style[`${className}-slider`]">
         <div :class="$style[`${className}-slider--title`]" class="text1">
           {{ card.title }}
+        </div>
+        <div class="text3">Описание: {{ card.description }}</div>
+        <div class="text3">
+          Цена: {{ card.price.toLocaleString("ru-RU") }} &dollar;
         </div>
         <div
           :class="$style[`${className}-slider--container`]"
@@ -54,8 +64,20 @@
           </div>
         </div>
         <div :class="$style[`${className}-slider--actions`]">
-          <UIButton @click="prevSlide">❮</UIButton>
-          <UIButton @click="nextSlide">❯</UIButton>
+          <UIButton
+            @click="
+              prevSlide();
+              stopAutoSlide();
+            "
+            >❮</UIButton
+          >
+          <UIButton
+            @click="
+              nextSlide();
+              stopAutoSlide();
+            "
+            >❯</UIButton
+          >
         </div>
       </div>
     </UIModal>
@@ -89,6 +111,7 @@ export default defineComponent({
       cardModal: false,
       currentIndex: 0,
       interval: null as null | number,
+      isLoading: false,
     };
   },
   methods: {
@@ -104,13 +127,36 @@ export default defineComponent({
     startAutoSlide() {
       this.interval = setInterval(() => {
         this.nextSlide();
-      }, 3000); // смена слайда каждые 3 секунды
+      }, 3000);
     },
     stopAutoSlide() {
       if (this.interval) {
         clearInterval(this.interval);
       }
     },
+    async handleClick(card: IGalleryCard) {
+      this.isLoading = true;
+      await new Promise((res) => {
+        setTimeout(() => {
+          res({});
+          console.log("fake promise");
+        }, 2000);
+      });
+      this.$emit(
+        "set-status",
+        card.status === ECARD_STATUS.ACTIVE
+          ? ECARD_STATUS.RESERVED
+          : ECARD_STATUS.ACTIVE
+      );
+
+      this.isLoading = false;
+    },
+  },
+  mounted() {
+    this.startAutoSlide();
+  },
+  beforeDestroy() {
+    this.stopAutoSlide();
   },
 });
 </script>

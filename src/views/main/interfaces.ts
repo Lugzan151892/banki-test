@@ -12,4 +12,5 @@ export interface IGalleryCard {
   price: number;
   old_price: number;
   image: string;
+  additional_images: Array<string>;
 }

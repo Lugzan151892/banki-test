@@ -49,6 +49,10 @@ $component: "header-component";
   align-items: center;
   padding-left: 23vw;
 
+  @media (min-width: 1921px) {
+    padding-left: 26vw;
+  }
+
   @media (max-width: 1600px) {
     padding-left: 13vw;
   }

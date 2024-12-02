@@ -9,6 +9,7 @@
       :class="$style[`${className}-image`]"
       :src="card.image"
       :alt="card.title"
+      @click="cardModal = true"
     />
     <div :class="$style[`${className}-wrapper`]">
       <h2 class="text2">{{ card.title }}</h2>
@@ -35,14 +36,38 @@
         Продана на аукционе
       </div>
     </div>
+    <UIModal v-if="cardModal" @close="cardModal = false">
+      <div :class="$style[`${className}-slider`]">
+        <div :class="$style[`${className}-slider--title`]" class="text1">
+          {{ card.title }}
+        </div>
+        <div
+          :class="$style[`${className}-slider--container`]"
+          :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        >
+          <div
+            :class="$style[`${className}-slider--item`]"
+            v-for="(image, index) in card.additional_images"
+            :key="index"
+          >
+            <img :src="image" :alt="'Slide ' + (index + 1)" />
+          </div>
+        </div>
+        <div :class="$style[`${className}-slider--actions`]">
+          <UIButton @click="prevSlide">❮</UIButton>
+          <UIButton @click="nextSlide">❯</UIButton>
+        </div>
+      </div>
+    </UIModal>
   </div>
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
+import { PropType, defineComponent } from "vue";
 import { ECARD_STATUS, IGalleryCard } from "@/views/main/interfaces";
 import UIButton from "@/components/ui/button/UIButton.vue";
-export default {
+import UIModal from "@/components/ui/modal/UIModal.vue";
+export default defineComponent({
   name: "GalleryCard",
   props: {
     card: {
@@ -52,6 +77,7 @@ export default {
   },
   components: {
     UIButton,
+    UIModal,
   },
   data() {
     const componentName = "GalleryCard";
@@ -60,9 +86,33 @@ export default {
       componentName,
       className,
       ECARD_STATUS,
+      cardModal: false,
+      currentIndex: 0,
+      interval: null as null | number,
     };
   },
-};
+  methods: {
+    nextSlide() {
+      this.currentIndex =
+        (this.currentIndex + 1) % this.card.additional_images.length;
+    },
+    prevSlide() {
+      this.currentIndex =
+        (this.currentIndex - 1 + this.card.additional_images.length) %
+        this.card.additional_images.length;
+    },
+    startAutoSlide() {
+      this.interval = setInterval(() => {
+        this.nextSlide();
+      }, 3000); // смена слайда каждые 3 секунды
+    },
+    stopAutoSlide() {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+    },
+  },
+});
 </script>
 
 <style lang="scss" module>
@@ -82,6 +132,10 @@ $component: "gallery-card";
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+  }
+
+  &-image {
+    cursor: pointer;
   }
 
   &-price {
@@ -105,6 +159,41 @@ $component: "gallery-card";
       margin-top: 34px;
       text-align: left;
       flex-grow: 1;
+    }
+  }
+
+  &-slider {
+    position: relative;
+    width: 600px;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+
+    &--title {
+      margin-bottom: 16px;
+    }
+
+    &--container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    &--item {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    &--item img {
+      width: 100%;
+      display: block;
+    }
+
+    &--actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
     }
   }
 }

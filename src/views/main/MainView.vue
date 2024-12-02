@@ -20,9 +20,10 @@ import HeaderComponent from "@/components/header/HeaderComponent.vue";
 import FooterComponent from "@/components/footer/FooterComponent.vue";
 import { cards } from "@/views/main/utils";
 import GalleryCard from "@/views/main/components/GalleryCard.vue";
-import { IGalleryCard } from "./interfaces";
+import { IGalleryCard } from "@/views/main/interfaces";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "MainView",
   components: {
     HeaderComponent,
@@ -42,12 +43,10 @@ export default {
   },
   computed: {
     filteredCards(): IGalleryCard[] {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       return this.cards.filter((card) => card.title.includes(this.search));
     },
   },
-};
+});
 </script>
 
 <style lang="scss" module>

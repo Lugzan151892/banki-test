@@ -13,6 +13,7 @@ export const cards: IGalleryCard[] = [
     price: 1000000,
     old_price: 2000000,
     image: image1,
+    additional_images: [image2, image3, image4],
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ export const cards: IGalleryCard[] = [
     price: 1000000,
     old_price: 2000000,
     image: image2,
+    additional_images: [image1, image3, image4],
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ export const cards: IGalleryCard[] = [
     price: 1000000,
     old_price: 2000000,
     image: image3,
+    additional_images: [image1, image2, image4],
   },
   {
     id: 4,
@@ -40,5 +43,6 @@ export const cards: IGalleryCard[] = [
     price: 1000000,
     old_price: 2000000,
     image: image4,
+    additional_images: [image1, image2, image3],
   },
 ];

@@ -38,8 +38,9 @@
 <script lang="ts">
 import { menuItems } from "@/utils";
 import burgerMenu from "@/assets/images/burger-menu.svg";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "MenuComponent",
   props: {
     directionTop: {
@@ -59,7 +60,7 @@ export default {
       showMenu: false,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" module>

@@ -13,8 +13,9 @@
 
 <script lang="ts">
 import UIButton from "@/components/ui/button/UIButton.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "UIModal",
   components: {
     UIButton,
@@ -31,7 +32,7 @@ export default {
       this.$emit("close");
     },
   },
-};
+});
 </script>
 
 <style lang="scss" module>

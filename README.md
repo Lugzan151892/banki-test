@@ -1,24 +1,20 @@
-# banki-test
+# Тестовое задание banki-test
 
-## Project setup
+## Для запуска проекта выполнить следующие действия:
+
 ```
 npm install
+npm run dev
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Для сборки проекта
 
-### Compiles and minifies for production
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -8,6 +8,7 @@
           v-for="card in filteredCards"
           :card="card"
           :key="card.id"
+          @set-status="setStatus($event, card.id)"
         />
       </div>
     </section>
@@ -18,9 +19,9 @@
 <script lang="ts">
 import HeaderComponent from "@/components/header/HeaderComponent.vue";
 import FooterComponent from "@/components/footer/FooterComponent.vue";
-import { cards } from "@/views/main/utils";
+import { cards, LOCAL_CARDS_VAR } from "@/views/main/utils";
 import GalleryCard from "@/views/main/components/GalleryCard.vue";
-import { IGalleryCard } from "@/views/main/interfaces";
+import { ECARD_STATUS, IGalleryCard } from "@/views/main/interfaces";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -45,6 +46,29 @@ export default defineComponent({
     filteredCards(): IGalleryCard[] {
       return this.cards.filter((card) => card.title.includes(this.search));
     },
+  },
+
+  methods: {
+    setStatus(status: ECARD_STATUS, cardId: number) {
+      this.cards = this.cards.map((card) =>
+        cardId === card.id
+          ? {
+              ...card,
+              status: status,
+            }
+          : card
+      );
+
+      localStorage.setItem(LOCAL_CARDS_VAR, JSON.stringify(this.cards));
+    },
+  },
+
+  mounted() {
+    const localCards = localStorage.getItem(LOCAL_CARDS_VAR);
+
+    if (localCards) {
+      this.cards = JSON.parse(localCards);
+    }
   },
 });
 </script>

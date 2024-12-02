@@ -11,6 +11,7 @@ export interface IGalleryCard {
   status: ECARD_STATUS;
   price: number;
   old_price: number;
+  description: string;
   image: string;
   additional_images: Array<string>;
 }

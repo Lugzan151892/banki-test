@@ -17,8 +17,9 @@ import { menuItems } from "@/utils";
 import UIInput from "@/components/ui/input/UIInput.vue";
 import UIButton from "@/components/ui/button/UIButton.vue";
 import MenuComponent from "@/components/menu/MenuComponent.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "HeaderComponent",
   components: {
     UIInput,
@@ -35,7 +36,7 @@ export default {
       search: "",
     };
   },
-};
+});
 </script>
 
 <style lang="scss" module>

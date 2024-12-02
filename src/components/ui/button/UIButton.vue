@@ -1,6 +1,6 @@
 <template>
   <button
-    :disabled="disabled"
+    :disabled="disabled || loading"
     :class="{
       [$style[className]]: true,
       [$style[`${className}--disabled`]]: disabled,
@@ -8,15 +8,25 @@
     }"
     @click="$emit('click')"
   >
-    <img v-if="checked" :src="check" alt="checked" />
-    <slot />
+    <img
+      v-if="loading"
+      :src="loadingGif"
+      alt="loading"
+      :class="$style[`${className}--loading`]"
+    />
+    <template v-else>
+      <img v-if="checked" :src="check" alt="checked" />
+      <slot />
+    </template>
   </button>
 </template>
 
 <script lang="ts">
 import check from "@/assets/images/check.svg";
+import { defineComponent } from "vue";
+import loadingGif from "@/assets/images/loading.gif";
 
-export default {
+export default defineComponent({
   name: "UIButton",
   props: {
     disabled: {
@@ -24,6 +34,10 @@ export default {
       default: false,
     },
     checked: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },
@@ -35,9 +49,10 @@ export default {
       componentName,
       className,
       check,
+      loadingGif,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" module>
@@ -53,6 +68,9 @@ $component: "ui-button";
   display: flex;
   align-items: center;
   gap: 4px;
+  min-width: 115px;
+  min-height: 52px;
+  position: relative;
 
   &:hover {
     background-color: var(--button-hover);
@@ -60,6 +78,7 @@ $component: "ui-button";
   }
 
   &--disabled {
+    opacity: 0.4;
     background-color: var(--button-disabled);
     pointer-events: none;
   }
@@ -67,6 +86,15 @@ $component: "ui-button";
   &--checked {
     background-color: var(--button-checked);
     padding: 14px 8px;
+  }
+
+  &--loading {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translate(-50%);
   }
 }
 </style>
